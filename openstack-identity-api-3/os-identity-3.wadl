@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application xmlns="http://wadl.dev.java.net/2009/02"
+             xmlns:db="http://docbook.org/ns/docbook">
+    <grammars>
+        <!-- will fill in later -->
+    </grammars>
+    <resources base="http://localhost:5000">
+        <resource path="v3">
+            <method href="#getVersion"/>
+        </resource>
+    </resources>
+    
+    <!-- Methods -->
+    <method id="getVersion" name="GET">
+        <doc title="Get Version">
+            <db:para>
+                Get version information about the identity service. 
+            </db:para>
+        </doc>
+    </method>
+</application>
