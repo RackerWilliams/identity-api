@@ -33,6 +33,16 @@
             <method href="#getService"/>
             <method href="#updateService"/>
             <method href="#deleteService"/>
+            <resource path="endpoints">
+                <method href="#listEndpoints"/>
+                <method href="#createEndpoint"/>
+                <resource path="{endpointID}">
+                    <param name="endpointID" type="xs:string" style="template"/>
+                    <method href="#getEndpoint"/>
+                    <method href="#updateEndpoint"/>
+                    <method href="#deleteEndpoint"/>
+                </resource>
+            </resource>
         </resource>
     </resource_type>
 
@@ -170,9 +180,9 @@
         </response>
     </method>
     <method id="getService" name="GET">
-        <doc title="Update Service">
+        <doc title="Get Service">
             <db:para>
-                Update a service.
+                Get a service.
             </db:para>
         </doc>
         <!-- Okay -->
@@ -207,10 +217,102 @@
             <representation mediaType="application/json"/>            
         </response>
     </method>
-    <method id="deleteService">
+    <method id="deleteService" name="DELETE">
         <doc title="Delete Service">
             <db:para>
                 Delete a service.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="204"/>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <!-- Endpoint Methods -->
+    <method id="listEndpoints" name="GET">
+        <doc title="Get Endpoints">
+            <db:para>
+                Get a list of endpoints.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="createEndpoint" name="POST">
+        <doc title="Create Endpoint">
+            <db:para>
+                Create endpoint.
+            </db:para>
+        </doc>
+        <request>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>
+        </request>
+        <!-- Okay -->
+        <response status="201">
+            <param name="Location" type="xs:anyURI" style="header" required="true"/>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="getEndpoint" name="GET">
+        <doc title="Get Endpoint">
+            <db:para>
+                Get an endpoint.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="updateEndpoint" name="PATCH">
+        <doc title="Update Endpoint">
+            <db:para>
+                Update an endpoint.
+            </db:para>
+        </doc>
+        <request>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>
+        </request>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="deleteEndpoint" name="DELETE">
+        <doc title="Delete Endpoint">
+            <db:para>
+                Delete an Endpoint.
             </db:para>
         </doc>
         <!-- Okay -->
