@@ -10,6 +10,7 @@
     <resources base="http://localhost:5000">
         <resource path="v3">
             <method href="#getVersion"/>
+            <resource path="extensions" type="#Extensions"/>
             <resource path="tokens" type="#Tokens"/>
             <resource path="services" type="#Catalog"/>
             <resource path="domains" type="#Domains"/>
@@ -21,6 +22,14 @@
     </resources>
     
     <!-- Resource Types -->
+    <resource_type id="Extensions">
+        <method href="#getExtensions"/>
+        <resource path="{alias}">
+            <param name="alias" type="xs:string" style="template"/>
+            <method href="#getExtension"/>
+        </resource>
+    </resource_type>
+ 
     <resource_type id="Tokens">
         <method href="#authenticate"/>
         <method href="#validate"/>
@@ -170,6 +179,40 @@
                 Get version information about the identity service. 
             </db:para>
         </doc>
+    </method>
+    <method id="getExtensions" name="GET">
+        <doc title="Extensions">
+            <db:para>
+                Get a list of supported extensions. 
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="getExtension" name="GET">
+        <doc title="Extension">
+            <db:para>
+                Get an extension. 
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
     </method>
     <!-- Token Methods -->
     <method id="authenticate" name="POST">
