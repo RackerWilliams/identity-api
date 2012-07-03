@@ -16,6 +16,7 @@
             <resource path="tenants" type="#Tenants"/>
             <resource path="users" type="#Users"/>
             <resource path="roles" type="#Roles"/>
+            <resource path="policies" type="#Policies"/>
         </resource>
     </resources>
     
@@ -60,10 +61,10 @@
             <method href="#getDomain"/>
             <method href="#updateDomain"/>
             <method href="#deleteDomain"/>
-            <resource path="tenants">
-                <method href="#listTenants"/>
+            <resource path="tenants" type="#EebeddedTenants">
+                <doc title="Tenants for a domain"/>
             </resource>
-            <resource path="users" type="#EmbeddedUser">
+            <resource path="users" type="#EmbeddedUsers">
                     <doc title="Users for a domain."/>
             </resource>
         </resource>
@@ -79,7 +80,7 @@
             <method href="#getTenant"/>
             <method href="#updateTenant"/>
             <method href="#deleteTenant"/>
-            <resource path="users" type="#EmbeddedUser">
+            <resource path="users" type="#EmbeddedUsers">
                     <doc title="Users for a tenant."/>
             </resource>
         </resource>
@@ -95,10 +96,8 @@
             <method href="#getUser"/>
             <method href="#updateUser"/>
             <method href="#deleteUser"/>
-            <resource path="tenants">
-                <method href="#listTenants">
+            <resource path="tenants" type="#EebeddedTenants">
                     <doc title="Get all user tenants"/>
-                </method>
             </resource>
             <resource path="credentials">
                 <method href="#listCredentials"/>
@@ -113,7 +112,7 @@
         </resource>
     </resource_type>
     
-    <resource_type id="EmbeddedUser">
+    <resource_type id="EmbeddedUsers">
         <method href="#listUsers"/>
         <resource path="{userID}">
             <param name="userID" type="xs:string" style="template"/>
@@ -130,6 +129,14 @@
         </resource>
     </resource_type>
     
+    <resource_type id="EebeddedTenants">
+        <method href="#listTenants"/>
+        <resource path="{tenantID}">
+            <param name="tenantID" type="xs:string" style="template"/>
+            <method href="#getTenant"/>
+        </resource>
+    </resource_type>
+    
     <resource_type id="Roles">
         <!-- All the following operations requrie an X-Auth-Token parameter -->
         <param type="xs:string" style="header" name="X-Auth-Token" required="true"/>
@@ -140,6 +147,19 @@
             <method href="#getRole"/>
             <method href="#updateRole"/>
             <method href="#deleteRole"/>
+        </resource>
+    </resource_type>
+    
+    <resource_type id="Policies">
+        <!-- All the following operations requrie an X-Auth-Token parameter -->
+        <param type="xs:string" style="header" name="X-Auth-Token" required="true"/>
+        <method href="#listPolicies"/>
+        <method href="#createPolicy"/>
+        <resource path="{policyID}">
+            <param name="policyID" type="xs:string" style="template"/>
+            <method href="#getPolicy"/>
+            <method href="#updatePolicy"/>
+            <method href="#deletePolicy"/>
         </resource>
     </resource_type>
 
@@ -891,6 +911,98 @@
         <doc title="Delete Role">
             <db:para>
                 Delete role.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="204"/>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <!-- Policies -->
+    <method id="listPolicies" name="GET">
+        <doc title="Get Policies">
+            <db:para>
+                Get a list of policies.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="createPolicy" name="POST">
+        <doc title="Create Policy">
+            <db:para>
+                Create a policy.
+            </db:para>
+        </doc>
+        <request>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>
+        </request>
+        <!-- Okay -->
+        <response status="201">
+            <param name="Location" type="xs:anyURI" style="header" required="true"/>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="getPolicy" name="GET">
+        <doc title="Get Policy">
+            <db:para>
+                Get a Policy.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="updatePolicy" name="PATCH">
+        <doc title="Update Policy">
+            <db:para>
+                Update a policy.
+            </db:para>
+        </doc>
+        <request>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>
+        </request>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="deletePolicy" name="DELETE">
+        <doc title="Delete Policy">
+            <db:para>
+                Delete policy.
             </db:para>
         </doc>
         <!-- Okay -->
