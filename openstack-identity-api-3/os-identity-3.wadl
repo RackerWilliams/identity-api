@@ -14,6 +14,8 @@
             <resource path="services" type="#Catalog"/>
             <resource path="domains" type="#Domains"/>
             <resource path="tenants" type="#Tenants"/>
+            <resource path="users" type="#Users"/>
+            <resource path="roles" type="#Roles"/>
         </resource>
     </resources>
     
@@ -84,6 +86,47 @@
                     <doc title="Get users for a tenant."/>
                 </method>
             </resource>
+        </resource>
+    </resource_type>
+    
+    <resource_type id="Users">
+        <!-- All the following operations requrie an X-Auth-Token parameter -->
+        <param type="xs:string" style="header" name="X-Auth-Token" required="true"/>
+        <method href="#listUsers"/>
+        <method href="#createUser"/>
+        <resource path="{userID}">
+            <param name="userID" type="xs:string" style="template"/>
+            <method href="#getUser"/>
+            <method href="#updateUser"/>
+            <method href="#deleteUser"/>
+            <resource path="tenants">
+                <method href="#listTenants">
+                    <doc title="Get all user tenants"/>
+                </method>
+            </resource>
+            <resource path="credentials">
+                <method href="#listCredentials"/>
+                <method href="#createCredential"/>
+                <resource path="{credentialID}">
+                    <param name="credentialID" type="xs:string" style="template"/>
+                    <method href="#getCredential"/>
+                    <method href="#updateCredential"/>
+                    <method href="#deleteCredential"/>
+                </resource>
+            </resource>
+        </resource>
+    </resource_type>
+    
+    <resource_type id="Roles">
+        <!-- All the following operations requrie an X-Auth-Token parameter -->
+        <param type="xs:string" style="header" name="X-Auth-Token" required="true"/>
+        <method href="#listRoles"/>
+        <method href="#createRole"/>
+        <resource path="{roleID}">
+            <param name="roleID" type="xs:string" style="template"/>
+            <method href="#getRole"/>
+            <method href="#updateRole"/>
+            <method href="#deleteRole"/>
         </resource>
     </resource_type>
 
@@ -560,6 +603,264 @@
             <representation mediaType="application/xml"/>
             <representation mediaType="application/json"/>            
         </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="createUser" name="POST">
+        <doc title="Create User">
+            <db:para>
+                Create a user.
+            </db:para>
+        </doc>
+        <request>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>
+        </request>
+        <!-- Okay -->
+        <response status="201">
+            <param name="Location" type="xs:anyURI" style="header" required="true"/>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="getUser" name="GET">
+        <doc title="Get User">
+            <db:para>
+                Get a user.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="updateUser" name="PATCH">
+        <doc title="Update User">
+            <db:para>
+                Update a user.
+            </db:para>
+        </doc>
+        <request>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>
+        </request>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="deleteUser" name="DELETE">
+        <doc title="User Tenant">
+            <db:para>
+                Delete a user.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="204"/>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <!-- Credentials -->
+    <method id="listCredentials" name="GET">
+        <doc title="Get Credentials">
+            <db:para>
+                Get a list of credentials.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="createCredential" name="POST">
+        <doc title="Create Credential">
+            <db:para>
+                Create a credential.
+            </db:para>
+        </doc>
+        <request>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>
+        </request>
+        <!-- Okay -->
+        <response status="201">
+            <param name="Location" type="xs:anyURI" style="header" required="true"/>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="getCredential" name="GET">
+        <doc title="Get Credential">
+            <db:para>
+                Get a Credential.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="updateCredential" name="PATCH">
+        <doc title="Update Credential">
+            <db:para>
+                Update a credential.
+            </db:para>
+        </doc>
+        <request>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>
+        </request>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="deleteCredential" name="DELETE">
+        <doc title="Delete Credential">
+            <db:para>
+                Delete a credential.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="204"/>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <!-- Roles -->
+    <method id="listRoles" name="GET">
+        <doc title="Get Roles">
+            <db:para>
+                Get a list of roles.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="createRole" name="POST">
+        <doc title="Create Role">
+            <db:para>
+                Create a role.
+            </db:para>
+        </doc>
+        <request>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>
+        </request>
+        <!-- Okay -->
+        <response status="201">
+            <param name="Location" type="xs:anyURI" style="header" required="true"/>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="getRole" name="GET">
+        <doc title="Get Role">
+            <db:para>
+                Get a Role.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="updateRole" name="PATCH">
+        <doc title="Update Role">
+            <db:para>
+                Update a role.
+            </db:para>
+        </doc>
+        <request>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>
+        </request>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="deleteRole" name="DELETE">
+        <doc title="Delete Role">
+            <db:para>
+                Delete role.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="204"/>
         <!-- Error -->
         <response status="401 403 409 400 500 503">
             <representation mediaType="application/xml"/>
