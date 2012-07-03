@@ -63,10 +63,8 @@
             <resource path="tenants">
                 <method href="#listTenants"/>
             </resource>
-            <resource path="users">
-                <method href="#listUsers">
-                    <doc title="Get users for a domain."/>
-                </method>
+            <resource path="users" type="#EmbeddedUser">
+                    <doc title="Users for a domain."/>
             </resource>
         </resource>
     </resource_type>
@@ -81,10 +79,8 @@
             <method href="#getTenant"/>
             <method href="#updateTenant"/>
             <method href="#deleteTenant"/>
-            <resource path="users">
-                <method href="#listUsers">
-                    <doc title="Get users for a tenant."/>
-                </method>
+            <resource path="users" type="#EmbeddedUser">
+                    <doc title="Users for a tenant."/>
             </resource>
         </resource>
     </resource_type>
@@ -112,6 +108,23 @@
                     <method href="#getCredential"/>
                     <method href="#updateCredential"/>
                     <method href="#deleteCredential"/>
+                </resource>
+            </resource>
+        </resource>
+    </resource_type>
+    
+    <resource_type id="EmbeddedUser">
+        <method href="#listUsers"/>
+        <resource path="{userID}">
+            <param name="userID" type="xs:string" style="template"/>
+            <method href="#getUser"/>
+            <resource path="roles">
+                <method href="#listRoles"/>
+                <resource path="{roleID}">
+                    <param name="roleID" type="xs:string" style="template"/>
+                    <method href="#getRole"/>
+                    <method href="#deleteRole"/>
+                    <method href="#addRoleToList"/>
                 </resource>
             </resource>
         </resource>
@@ -836,6 +849,27 @@
         <doc title="Update Role">
             <db:para>
                 Update a role.
+            </db:para>
+        </doc>
+        <request>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>
+        </request>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="addRoleToList" name="PUT">
+        <doc title="Add a role to the list of roles.">
+            <db:para>
+                Add a role to the list of roles.
             </db:para>
         </doc>
         <request>
