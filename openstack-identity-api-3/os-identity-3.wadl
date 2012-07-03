@@ -11,6 +11,7 @@
         <resource path="v3">
             <method href="#getVersion"/>
             <resource path="tokens" type="#Tokens"/>
+            <resource path="services" type="#Catalog"/>
         </resource>
     </resources>
     
@@ -20,6 +21,19 @@
         <method href="#validate"/>
         <method href="#validateHead"/>
         <method href="#removeToken"/>
+    </resource_type>
+    
+    <resource_type id="Catalog">
+        <!-- All the following operations requrie an X-Auth-Token parameter -->
+        <param type="xs:string" style="header" name="X-Auth-Token" required="true"/>
+        <method href="#listServices"/>
+        <method href="#createService"/>
+        <resource path="{serviceID}">
+            <param name="serviceID" type="xs:string" style="template"/>
+            <method href="#getService"/>
+            <method href="#updateService"/>
+            <method href="#deleteService"/>
+        </resource>
     </resource_type>
 
     <!-- Methods -->
@@ -107,6 +121,98 @@
             <param type="xs:string" style="header" name="X-Auth-Token" required="true"/>
             <param type="xs:string" style="header" name="X-Subject-Token" required="true"/>
         </request>
+        <!-- Okay -->
+        <response status="204"/>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <!-- Services Methods -->
+    <method id="listServices" name="GET">
+        <doc title="List Services">
+            <db:para>
+                Provide a list of services.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="createService" name="POST">
+        <doc title="Create Service">
+            <db:para>
+                Create a service.
+            </db:para>
+        </doc>
+        <request>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>
+        </request>
+        <!-- Okay -->
+        <response status="201">
+            <param name="Location" type="xs:anyURI" style="header" required="true"/>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="getService" name="GET">
+        <doc title="Update Service">
+            <db:para>
+                Update a service.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="updateService" name="PATCH">
+        <doc title="Update Service">
+            <db:para>
+                Update a service.
+            </db:para>
+        </doc>
+        <request>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>
+        </request>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="deleteService">
+        <doc title="Delete Service">
+            <db:para>
+                Delete a service.
+            </db:para>
+        </doc>
         <!-- Okay -->
         <response status="204"/>
         <!-- Error -->
