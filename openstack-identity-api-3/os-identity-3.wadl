@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <application xmlns="http://wadl.dev.java.net/2009/02"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
              xmlns:db="http://docbook.org/ns/docbook">
     <grammars>
         <!-- will fill in later -->
     </grammars>
+
     <resources base="http://localhost:5000">
         <resource path="v3">
             <method href="#getVersion"/>
-            <resource path="tokens">
-                <method href="#authenticate"/>
-            </resource>
+            <resource path="tokens" type="#Tokens"/>
         </resource>
     </resources>
     
+    <!-- Resource Types -->
+    <resource_type id="Tokens">
+        <method href="#authenticate"/>
+        <method href="#validate"/>
+        <method href="#validateHead"/>
+        <method href="#removeToken"/>
+    </resource_type>
+
     <!-- Methods -->
     <method id="getVersion" name="GET">
         <doc title="Get Version">
@@ -22,6 +30,7 @@
             </db:para>
         </doc>
     </method>
+    <!-- Token Methods -->
     <method id="authenticate" name="POST">
         <doc title="Authenticate">
             <db:para>
@@ -37,6 +46,69 @@
             <representation mediaType="application/xml"/>
             <representation mediaType="application/json"/>            
         </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="validate" name="GET">
+        <doc title="Validate Token">
+            <db:para>
+                Validate the token supplied in the
+                <db:parameter>X-Subject-Token</db:parameter>
+                header.
+            </db:para>
+        </doc>
+        <request>
+            <param type="xs:string" style="header" name="X-Auth-Token" required="true"/>
+            <param type="xs:string" style="header" name="X-Subject-Token" required="true"/>
+        </request>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="validateHead" name="HEAD">
+        <doc title="Validate Token (Head)">
+            <db:para>
+                Validate the token supplied in the
+                <db:parameter>X-Subject-Token</db:parameter>
+                header.
+            </db:para>
+        </doc>
+        <request>
+            <param type="xs:string" style="header" name="X-Auth-Token" required="true"/>
+            <param type="xs:string" style="header" name="X-Subject-Token" required="true"/>
+        </request>
+        <!-- Okay -->
+        <response status="200"/>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="removeToken" name="DELETE">
+        <doc title="Remove Token">
+            <db:para>
+                Remove the token supplied in the
+                <db:parameter>X-Subject-Token</db:parameter>
+                header.
+            </db:para>
+        </doc>
+        <request>
+            <param type="xs:string" style="header" name="X-Auth-Token" required="true"/>
+            <param type="xs:string" style="header" name="X-Subject-Token" required="true"/>
+        </request>
+        <!-- Okay -->
+        <response status="204"/>
         <!-- Error -->
         <response status="401 403 409 400 500 503">
             <representation mediaType="application/xml"/>
