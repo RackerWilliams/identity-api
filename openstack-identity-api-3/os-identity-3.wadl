@@ -12,7 +12,8 @@
             <method href="#getVersion"/>
             <resource path="tokens" type="#Tokens"/>
             <resource path="services" type="#Catalog"/>
-            <resource path="domains" type="#Identity"/>
+            <resource path="domains" type="#Domains"/>
+            <resource path="tenants" type="#Tenants"/>
         </resource>
     </resources>
     
@@ -47,7 +48,7 @@
         </resource>
     </resource_type>
 
-    <resource_type id="Identity">
+    <resource_type id="Domains">
         <!-- All the following operations requrie an X-Auth-Token parameter -->
         <param type="xs:string" style="header" name="X-Auth-Token" required="true"/>
         <method href="#listDomains"/>
@@ -63,6 +64,24 @@
             <resource path="users">
                 <method href="#listUsers">
                     <doc title="Get users for a domain."/>
+                </method>
+            </resource>
+        </resource>
+    </resource_type>
+    
+    <resource_type id="Tenants">
+        <!-- All the following operations requrie an X-Auth-Token parameter -->
+        <param type="xs:string" style="header" name="X-Auth-Token" required="true"/>
+        <method href="#listTenants"/>
+        <method href="#createTenant"/>
+        <resource path="{tenantID}">
+            <param name="tenantID" type="xs:string" style="template"/>
+            <method href="#getTenant"/>
+            <method href="#updateTenant"/>
+            <method href="#deleteTenant"/>
+            <resource path="users">
+                <method href="#listUsers">
+                    <doc title="Get users for a tenant."/>
                 </method>
             </resource>
         </resource>
@@ -449,6 +468,80 @@
             <representation mediaType="application/xml"/>
             <representation mediaType="application/json"/>            
         </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="createTenant" name="POST">
+        <doc title="Create Tenant">
+            <db:para>
+                Create a tenant.
+            </db:para>
+        </doc>
+        <request>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>
+        </request>
+        <!-- Okay -->
+        <response status="201">
+            <param name="Location" type="xs:anyURI" style="header" required="true"/>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="getTenant" name="GET">
+        <doc title="Get Tenant">
+            <db:para>
+                Get a tenant.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="updateTenant" name="PATCH">
+        <doc title="Update Tenant">
+            <db:para>
+                Update a tenant.
+            </db:para>
+        </doc>
+        <request>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>
+        </request>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="deleteTenant" name="DELETE">
+        <doc title="Delete Tenant">
+            <db:para>
+                Delete a tenant.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="204"/>
         <!-- Error -->
         <response status="401 403 409 400 500 503">
             <representation mediaType="application/xml"/>
