@@ -12,6 +12,7 @@
             <method href="#getVersion"/>
             <resource path="tokens" type="#Tokens"/>
             <resource path="services" type="#Catalog"/>
+            <resource path="domains" type="#Identity"/>
         </resource>
     </resources>
     
@@ -42,6 +43,27 @@
                     <method href="#updateEndpoint"/>
                     <method href="#deleteEndpoint"/>
                 </resource>
+            </resource>
+        </resource>
+    </resource_type>
+
+    <resource_type id="Identity">
+        <!-- All the following operations requrie an X-Auth-Token parameter -->
+        <param type="xs:string" style="header" name="X-Auth-Token" required="true"/>
+        <method href="#listDomains"/>
+        <method href="#createDomain"/>
+        <resource path="{domainID}">
+            <param name="domainID" type="xs:string" style="template"/>
+            <method href="#getDomain"/>
+            <method href="#updateDomain"/>
+            <method href="#deleteDomain"/>
+            <resource path="tenants">
+                <method href="#listTenants"/>
+            </resource>
+            <resource path="users">
+                <method href="#listUsers">
+                    <doc title="Get users for a domain."/>
+                </method>
             </resource>
         </resource>
     </resource_type>
@@ -317,6 +339,134 @@
         </doc>
         <!-- Okay -->
         <response status="204"/>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <!-- Domains -->
+    <method id="listDomains" name="GET">
+        <doc title="Get Domains">
+            <db:para>
+                Get a list of domains.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="createDomain" name="POST">
+        <doc title="Create Domain">
+            <db:para>
+                Create a domain.
+            </db:para>
+        </doc>
+        <request>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>
+        </request>
+        <!-- Okay -->
+        <response status="201">
+            <param name="Location" type="xs:anyURI" style="header" required="true"/>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="getDomain" name="GET">
+        <doc title="Get Domain">
+            <db:para>
+                Get a domain.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="updateDomain" name="PATCH">
+        <doc title="Update Domain">
+            <db:para>
+                Update a domain.
+            </db:para>
+        </doc>
+        <request>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>
+        </request>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <method id="deleteDomain" name="DELETE">
+        <doc title="Delete Domain">
+            <db:para>
+                Delete a Domain.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="204"/>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <!-- Tenants -->
+    <method id="listTenants" name="GET">
+        <doc title="Get Tenants">
+            <db:para>
+                Get a list of tenants.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+        <!-- Error -->
+        <response status="401 403 409 400 500 503">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
+    </method>
+    <!-- Users-->
+    <method id="listUsers" name="GET">
+        <doc title="Get Users">
+            <db:para>
+                Get a list of users.
+            </db:para>
+        </doc>
+        <!-- Okay -->
+        <response status="200">
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>            
+        </response>
         <!-- Error -->
         <response status="401 403 409 400 500 503">
             <representation mediaType="application/xml"/>
