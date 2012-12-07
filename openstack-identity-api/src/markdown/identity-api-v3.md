@@ -824,8 +824,8 @@ The key use cases we need to cover:
 
 - given a user name & password, get a token to represent the user
 - given a token, get a list of other projects the user can access
-- given a token ID, validate the token and return user, project, roles, and
-  potential endpoints.
+- given a token ID, validate the token and return user, projects, roles, and
+  potential endpoints that token provides access to
 - given a valid token, request another token with a different project (change
   project being represented with the user)
 - forced expiration of a token
@@ -840,10 +840,11 @@ resource.
 #### Authenticate: `POST /tokens`
 
 For the use case where we are providing a username and password, optionally
-with a project_name or project_id. If a project_name or project_id is NOT
+with one or more  project_name or project_id. If a project_name or project_id is NOT
 provided, the system will use the default project associated with the user, or
 return a 401 Not Authorized if a default project is not found or unable to be
-used.
+used. If multiple project_name or project_ids are provided a token will be returned
+that allows access to those projects simultaniously.
 
 Request:
 
@@ -854,8 +855,9 @@ Request:
                 "password": "--password--",
                 "user_id": "--optional-user-id--"
             },
-        "project_name": "--optional-project-name--",
-        "project_id": "--optional-project-id--"
+        "projects" : [{ 
+             "project_name": "--optional-project-name--",
+             "project_id": "--optional-project-id--"}]
         }
     }
 
@@ -867,8 +869,9 @@ Request:
 
     {
         "auth": {
-            "project_id": "--optional-project-id--",
-            "project_name": "--optional-project-name--",
+            "projects" : [{ 
+              "project_id": "--optional-project-id--",
+              "project_name": "--optional-project-name--"}],
             "token": {
                 "id": "--token-id--"
             }
