@@ -855,7 +855,7 @@ Request:
                 "password": "--password--",
                 "user_id": "--optional-user-id--"
             },
-        "projects" : [{ 
+        "projects" : [{
              "project_name": "--optional-project-name--",
              "project_id": "--optional-project-id--"}]
         }
@@ -869,7 +869,7 @@ Request:
 
     {
         "auth": {
-            "projects" : [{ 
+            "projects" : [{
               "project_id": "--optional-project-id--",
               "project_name": "--optional-project-name--"}],
             "token": {
