@@ -1030,16 +1030,28 @@ Response:
                 }
             }
         ],
-        "project": {
-            "domain": {
-                "enabled": true,
-                "id": "--domain-id--",
-                "name": "--domain-name--"
-            },
-            "enabled": true,
-            "id": "--project-id--",
-            "name": "--project-name--"
-        },
+        "projects": [
+          {
+              "domain": {
+                  "enabled": true,
+                  "id": "--domain-id--",
+                  "name": "--domain-name--"
+              },
+              "enabled": true,
+              "id": "--project-id--",
+              "name": "--project-name--"
+          },
+          {
+              "domain": {
+                  "enabled": true,
+                  "id": "--domain-id--",
+                  "name": "--domain-name--"
+              },
+              "enabled": true,
+              "id": "--project-id--",
+              "name": "--project-name--"
+          }
+        ],
         "token": {
             "expires": "2012-06-18T20:08:53Z",
             "id": "--token-id--",
