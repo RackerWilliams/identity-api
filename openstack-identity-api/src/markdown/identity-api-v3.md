@@ -1104,6 +1104,16 @@ Failure response:
         }
     }
 
+A project id may be specified as a query parameter to check whether a
+token is valid for a particular project:
+
+    HEAD /tokens?project=1232
+
+Multiple projects may be specified simultaneously:
+
+    HEAD /tokens?project=1232&project=1234&project=9923
+
+
 #### Remove token: `DELETE /tokens`
 
 - token to be used to validate the call in X-Auth-Token
