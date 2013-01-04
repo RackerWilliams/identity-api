@@ -840,11 +840,11 @@ resource.
 #### Authenticate: `POST /tokens`
 
 For the use case where we are providing a username and password, optionally
-with one or more  project_name or project_id. If a project_name or project_id is NOT
-provided, the system will use the default project associated with the user, or
+with one or more  project_names or project_ids. If a project_name or project_id is NOT
+provided, the system will use the default projects associated with the user, or
 return a 401 Not Authorized if a default project is not found or unable to be
-used. If multiple project_name or project_ids are provided a token will be returned
-that allows access to those projects simultaniously.
+used. If multiple project_names or project_ids are provided a token will be returned
+that allows access to those projects simultaneously.
 
 Request:
 
@@ -856,8 +856,8 @@ Request:
                 "user_id": "--optional-user-id--"
             },
         "projects" : [{
-             "project_name": "--optional-project-name--",
-             "project_id": "--optional-project-id--"}]
+             "name": "--optional-project-name--",
+             "id": "--optional-project-id--"}]
         }
     }
 
@@ -870,8 +870,8 @@ Request:
     {
         "auth": {
             "projects" : [{
-              "project_id": "--optional-project-id--",
-              "project_name": "--optional-project-name--"}],
+              "id": "--optional-project-id--",
+              "name": "--optional-project-name--"}],
             "token": {
                 "id": "--token-id--"
             }
@@ -1107,11 +1107,11 @@ Failure response:
 A project id may be specified as a query parameter to check whether a
 token is valid for a particular project:
 
-    HEAD /tokens?project=1232
+    HEAD /tokens?project_id=1232
 
 Multiple projects may be specified simultaneously:
 
-    HEAD /tokens?project=1232&project=1234&project=9923
+    HEAD /tokens?project_id=1232&project_id=1234&project_id=9923
 
 
 #### Remove token: `DELETE /tokens`
