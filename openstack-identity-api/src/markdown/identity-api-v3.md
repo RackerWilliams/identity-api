@@ -844,7 +844,8 @@ with one or more  project_names or project_ids. If a project_name or project_id 
 provided, the system will use the default projects associated with the user, or
 return a 401 Not Authorized if a default project is not found or unable to be
 used. If multiple project_names or project_ids are provided a token will be returned
-that allows access to those projects simultaneously.
+that allows access to those projects simultaneously. The list of services and endpoints
+that this token has access to is reflected in the service catalog.
 
 Request:
 
@@ -884,16 +885,28 @@ Response:
     Location: https://identity:35357/v3/tokens/--token-id--
 
     {
-        "project": {
-            "domain": {
-                "enabled": true,
-                "id": "...",
-                "name": "..."
-            },
-            "enabled": true,
-            "id": "...",
-            "name": "..."
-        },
+        "projects": [
+          {
+              "domain": {
+                  "enabled": true,
+                  "id": "--domain-id--",
+                  "name": "--domain-name--"
+              },
+              "enabled": true,
+              "id": "--project-id--",
+              "name": "--project-name--"
+          },
+          {
+              "domain": {
+                  "enabled": true,
+                  "id": "--domain-id--",
+                  "name": "--domain-name--"
+              },
+              "enabled": true,
+              "id": "--project-id--",
+              "name": "--project-name--"
+          }
+        ],
         "services": [
             {
                 "endpoints": [
@@ -902,6 +915,7 @@ Response:
                         "id": "--endpoint-id--",
                         "name": null,
                         "region": "RegionOne",
+                        "project-id": "--project-id--",
                         "url": "http://external:8776/v1/--project-id--"
                     },
                     {
@@ -909,6 +923,7 @@ Response:
                         "id": "--endpoint-id--",
                         "name": null,
                         "region": "RegionOne",
+                        "project-id": "--project-id--",
                         "url": "http://internal:8776/v1/--project-id--"
                     }
                 ],
@@ -993,6 +1008,7 @@ Response:
                             "id": "--endpoint-id--",
                             "name": null,
                             "region": "RegionOne",
+                            "project-id": "--project-id--",
                             "url": "http://external:8776/v1/--project-id--"
                         },
                         {
@@ -1000,6 +1016,7 @@ Response:
                             "id": "--endpoint-id--",
                             "name": null,
                             "region": "RegionOne",
+                            "project-id": "--project-id--",
                             "url": "http://internal:8776/v1/--project-id--"
                         }
                     ],
