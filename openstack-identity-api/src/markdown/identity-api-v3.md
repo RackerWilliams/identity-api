@@ -840,12 +840,12 @@ resource.
 #### Authenticate: `POST /tokens`
 
 For the use case where we are providing a username and password, optionally
-with one or more  project_names or project_ids. If a project_name or project_id is NOT
+with one or more  project names or project IDs. If a project_name or project_id is NOT
 provided, the system will use the default projects associated with the user, or
 return a 401 Not Authorized if a default project is not found or unable to be
-used. If multiple project_names or project_ids are provided a token will be returned
+used. If multiple project names or project IDs are provided a token will be returned
 that allows access to those projects simultaneously. The list of services and endpoints
-that this token has access to is reflected in the service catalog.
+that this token has access to is reflected in its service catalog.
 
 Request:
 
@@ -1142,7 +1142,7 @@ Failure response:
         }
     }
 
-A project id may be specified as a query parameter to check whether a
+A project ID may be specified as a query parameter to check whether a
 token is valid for a particular project:
 
     HEAD /tokens?project_id=1232
