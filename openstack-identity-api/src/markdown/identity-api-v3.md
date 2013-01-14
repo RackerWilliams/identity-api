@@ -894,7 +894,21 @@ Response:
               },
               "enabled": true,
               "id": "--project-id--",
-              "name": "--project-name--"
+              "name": "--project-name--",
+              "roles": [
+                  {
+                      "id": "...",
+                      "name": "Member",
+                      "project_id": "c5271357278e4a2094a96e0e6856c5cf"
+                  },
+                  {
+                      "description": "desc of domain...",
+                      "domain_id": "0ab841c666284a7ca5941f2471019074",
+                      "id": "...",
+                      "name": "Admin"
+                  }
+              ],
+              "roles_links": []
           },
           {
               "domain": {
@@ -904,7 +918,15 @@ Response:
               },
               "enabled": true,
               "id": "--project-id--",
-              "name": "--project-name--"
+              "name": "--project-name--",
+              "roles": [
+                  {
+                      "id": "...",
+                      "name": "Member",
+                      "project_id": "c5271357278e4a2094a96e0e6856c5cf"
+                  }
+              ],
+              "roles_links": []
           }
         ],
         "services": [
@@ -959,21 +981,7 @@ Response:
             "description": "a domain administrator",
             "id": "766f3f4235fa468588e30f31157eb9ac",
             "name": "admin",
-            "project_id": "--default-project-id--",
-            "roles": [
-                {
-                    "id": "...",
-                    "name": "Member",
-                    "project_id": "c5271357278e4a2094a96e0e6856c5cf"
-                },
-                {
-                    "description": "desc of domain...",
-                    "domain_id": "0ab841c666284a7ca5941f2471019074",
-                    "id": "...",
-                    "name": "Admin"
-                }
-            ],
-            "roles_links": []
+            "project_id": "--default-project-id--"
         }
     }
 
@@ -1056,7 +1064,20 @@ Response:
               },
               "enabled": true,
               "id": "--project-id--",
-              "name": "--project-name--"
+              "name": "--project-name--",
+              "roles": [
+                  {
+                      "id": "--role-id--",
+                      "name": "--role-name--",
+                      "project_id": "--project-id--"
+                  },
+                  {
+                      "domain_id": "--domain-id--",
+                      "id": "--role-id--",
+                      "name": "--role-name--"
+                  }
+              ],
+              "roles_links": []
           },
           {
               "domain": {
@@ -1066,7 +1087,20 @@ Response:
               },
               "enabled": true,
               "id": "--project-id--",
-              "name": "--project-name--"
+              "name": "--project-name--",
+              "roles": [
+                  {
+                      "id": "--role-id--",
+                      "name": "--role-name--",
+                      "project_id": "--project-id--"
+                  },
+                  {
+                      "domain_id": "--domain-id--",
+                      "id": "--role-id--",
+                      "name": "--role-name--"
+                  }
+              ],
+              "roles_links": []
           }
         ],
         "token": {
@@ -1083,20 +1117,7 @@ Response:
             "description": "a domain administrator",
             "id": "--user-id--",
             "name": "admin",
-            "project_id": "--default-project-id--",
-            "roles": [
-                {
-                    "id": "--role-id--",
-                    "name": "--role-name--",
-                    "project_id": "--project-id--"
-                },
-                {
-                    "domain_id": "--domain-id--",
-                    "id": "--role-id--",
-                    "name": "--role-name--"
-                }
-            ],
-            "roles_links": []
+            "project_id": "--default-project-id--"
         }
     }
 
